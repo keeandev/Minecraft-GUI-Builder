@@ -1,0 +1,17 @@
+C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\bin\Debug\netcoreapp3.1\Minecraft GUI Builder.exe
+C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\bin\Debug\netcoreapp3.1\Minecraft GUI Builder.deps.json
+C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\bin\Debug\netcoreapp3.1\Minecraft GUI Builder.runtimeconfig.json
+C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\bin\Debug\netcoreapp3.1\Minecraft GUI Builder.runtimeconfig.dev.json
+C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\bin\Debug\netcoreapp3.1\Minecraft GUI Builder.dll
+C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\bin\Debug\netcoreapp3.1\Minecraft GUI Builder.pdb
+C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\obj\Debug\netcoreapp3.1\Minecraft GUI Builder.csprojAssemblyReference.cache
+C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\obj\Debug\netcoreapp3.1\Minecraft GUI Builder.csproj.GenerateResource.cache
+C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\obj\Debug\netcoreapp3.1\Minecraft GUI Builder.AssemblyInfoInputs.cache
+C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\obj\Debug\netcoreapp3.1\Minecraft GUI Builder.AssemblyInfo.cs
+C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\obj\Debug\netcoreapp3.1\Minecraft GUI Builder.csproj.CoreCompileInputs.cache
+C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\obj\Debug\netcoreapp3.1\Minecraft GUI Builder.dll
+C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\obj\Debug\netcoreapp3.1\Minecraft GUI Builder.pdb
+C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\obj\Debug\netcoreapp3.1\Minecraft GUI Builder.genruntimeconfig.cache
+C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\obj\Debug\netcoreapp3.1\Minecraft_GUI_Builder.GUI.resources
+C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\obj\Debug\netcoreapp3.1\Minecraft_GUI_Builder.Properties.Resources.resources
+C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\obj\Debug\netcoreapp3.1\Minecraft_GUI_Builder.NewForm.resources
