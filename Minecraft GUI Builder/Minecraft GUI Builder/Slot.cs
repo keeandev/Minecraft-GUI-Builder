@@ -9,6 +9,9 @@ namespace Minecraft_GUI_Builder
 {
     class Slot
     {
+
+        public bool Block { get; set; }
+        public string ImageName { get; set; }
         public int Index { get; set; }
         public Image Image { get; set; }
         public Slot(int Index)

@@ -8,7 +8,7 @@ namespace Minecraft_GUI_Builder
 {
     public class Item
     {
-        public bool Current { get; set; }
+        public bool Block { get; set; }
         public int Index { get; set; }
         public string Title { get; set; }
         public PictureBox Image { get; set; }
@@ -19,7 +19,7 @@ namespace Minecraft_GUI_Builder
         public Item(string title)
         {
             Title = title;
-            Image = new ImageBox();
+            Image = new ImageBox(System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor);
             Image.Click += onClicked;
         }
 

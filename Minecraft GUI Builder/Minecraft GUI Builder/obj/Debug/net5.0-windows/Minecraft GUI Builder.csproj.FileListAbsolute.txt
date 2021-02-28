@@ -104,7 +104,6 @@ C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\bin\D
 C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\bin\Debug\net5.0-windows\items\fireworks.png
 C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\bin\Debug\net5.0-windows\items\fireworks_charge.png
 C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\bin\Debug\net5.0-windows\items\fireworks_charge_overlay.png
-C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\bin\Debug\net5.0-windows\items\fishing_rod_cast.png
 C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\bin\Debug\net5.0-windows\items\fishing_rod_uncast.png
 C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\bin\Debug\net5.0-windows\items\fish_clownfish_raw.png
 C:\Users\DinoZoid\source\repos\Minecraft GUI Builder\Minecraft GUI Builder\bin\Debug\net5.0-windows\items\fish_cod_cooked.png

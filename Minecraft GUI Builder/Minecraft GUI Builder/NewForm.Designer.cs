@@ -119,6 +119,7 @@ namespace Minecraft_GUI_Builder
             this.titleBox.Name = "titleBox";
             this.titleBox.Size = new System.Drawing.Size(120, 23);
             this.titleBox.TabIndex = 0;
+            this.titleBox.Text = "GUI";
             // 
             // heightLabel
             // 
@@ -194,6 +195,7 @@ namespace Minecraft_GUI_Builder
             this.Name = "NewForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "New";
+            this.Load += new System.EventHandler(this.NewForm_Load);
             this.sizeBox.ResumeLayout(false);
             this.sizeBox.PerformLayout();
             this.infoBox.ResumeLayout(false);

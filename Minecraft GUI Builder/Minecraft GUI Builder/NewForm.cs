@@ -13,6 +13,9 @@ namespace Minecraft_GUI_Builder
         public NewForm()
         {
             InitializeComponent();
+        }
+        private void NewForm_Load(object sender, EventArgs e)
+        {
             slotsLabel.Text = "Slots: " + widthUpDown.Value * heightUpDown.Value;
         }
 
@@ -28,8 +31,8 @@ namespace Minecraft_GUI_Builder
 
         private void createButton_Click(object sender, EventArgs e)
         {
-            GUI.title = titleBox.Text;
-            GUI.slots = (int) (widthUpDown.Value * heightUpDown.Value);
+            GUI.GetInstance().title = titleBox.Text;
+            GUI.GetInstance().slots = (int) (widthUpDown.Value * heightUpDown.Value);
             GUI.GetInstance().CreateInventory();
             Close();
         }
@@ -38,6 +41,5 @@ namespace Minecraft_GUI_Builder
         {
             Close();
         }
-
     }
 }

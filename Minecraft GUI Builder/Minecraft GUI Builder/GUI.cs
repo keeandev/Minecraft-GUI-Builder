@@ -20,14 +20,20 @@ namespace Minecraft_GUI_Builder
     public partial class GUI : Form
     {
 
+        private bool itemsLastClicked = true;
         private bool numbersChecked;
+        public string title = "GUI";
+        public int slots = 54;
+        private int x, y;
 
-        ArrayList itemList = new ArrayList();
-        ArrayList slotList = new ArrayList();
-        public static int drawIndex, slots = 54, x, y;
-        public static string title = "GUI";
+        private List<string> blockImageNames = new List<string>();
+        private List<string> itemImageNames = new List<string>();
+        private List<Image> itemImages = new List<Image>();
+        private List<Image> blockImages = new List<Image>();
+        private ArrayList itemList = new ArrayList();
+        private ArrayList slotList = new ArrayList();
 
-        private ImageBox inventoryImage = new ImageBox();
+        private ImageBox inventoryImage = new ImageBox(InterpolationMode.NearestNeighbor);
         private Item currentItem;
         private static GUI instance;
 
@@ -36,29 +42,52 @@ namespace Minecraft_GUI_Builder
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             InitializeComponent();
             instance = this;
-            foreach(var file in Directory.GetFiles(Application.StartupPath + @"items")) items.Images.Add(new Bitmap(file));
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        /**
+         * Handles the loading of items asynchronously, adding them to the itemPanel, hooking click events, and displaying them.
+         **/
+
+        private async void Form1_Load(object sender, EventArgs e)
         {
+            CreateInventory();
+            await Task.Run(async () =>
+            {
+                foreach (string file in Directory.GetFiles(Application.StartupPath + @"items"))
+                {
+                    itemImages.Add(new Bitmap(file));
+                    itemImageNames.Add(Path.GetFileName(file));
+                }
+                foreach (string file in Directory.GetFiles(Application.StartupPath + @"blocks"))
+                {
+                    blockImages.Add(new Bitmap(file));
+                    blockImageNames.Add(Path.GetFileName(file));
+                }
+            });
+            items.Images.AddRange(itemImages.ToArray());
             for (int i = 0; i < items.Images.Count; i++)
             {
-                Item item = new Item(i.ToString());
+                Item item = new Item(itemImageNames[i]);
                 item.Image.Width = 32;
                 item.Image.Height = 32;
                 items.ImageSize = new Size(32, 32);
                 item.Image.Image = items.Images[i];
+                item.Index = i;
                 itemList.Add(item);
             }
+            blocksPanel.SuspendLayout();
             foreach (Item item in itemList)
             {
                 blocksPanel.Controls.Add(item.Image);
                 item.onClick += ItemClicked;
             }
-            CreateInventory();
-            Application.DoEvents();
+            blocksPanel.ResumeLayout();
         }
 
+
+        /**
+         * Draws an outline around the selected item in the item list.
+        **/
 
         private void blocksPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -71,6 +100,13 @@ namespace Minecraft_GUI_Builder
             }
         }
 
+        /**
+         * Displays the slots on the inventory if the image has been set.
+         * InterpolationMode.NearestNeighbor tells the graphics that we don't want antialiasing.
+         * PixelOffsetMode.Half means coordinate (0.5, 0.5) aligns with the middle (=half) of the top left pixel, or to put it more clearly: (0, 0) is the top left of the top left pixel.
+         * PixelOffsetMode.None means coordinate (0.5, 0.5) aligns with the top left corner of the top left pixel.
+        **/
+
         private void InventoryImage_Paint(object sender, PaintEventArgs e)
         {
             int xPos = 7 * 3 + 2;
@@ -82,6 +118,8 @@ namespace Minecraft_GUI_Builder
                 int y = yPos + (18 * 3) * (i / 9);
                 if(slot.Image != null)
                 {
+                    //if (slot.Block) e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    //else e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
                     e.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
                     e.Graphics.PixelOffsetMode = PixelOffsetMode.Half;
                     e.Graphics.DrawImage(slot.Image, x, y, slot.Image.Width * 1.5f, slot.Image.Height * 1.5f);
@@ -89,15 +127,32 @@ namespace Minecraft_GUI_Builder
             }
         }
 
+        /**
+         * Handles clicking from the MenuStrip exit button.
+         * This kills the program.
+        **/
+
         private void exitButton_ItemClicked(object sender, EventArgs e)
         {
-            Environment.Exit(0);
+            Process.GetCurrentProcess().Kill();
         }
+
+        /**
+         * Handles clicking from the MenuStrip new button.
+         * Creates and opens a new form.
+        **/
+
         private void newButton_ItemClicked(object sender, EventArgs e)
         {
             NewForm newForm = new NewForm();
             newForm.Show();
         }
+
+        /**
+         * Handles clicking from the MenuStrip numbers button.
+         * Toggles the numbers buttons.
+        **/
+
         private void numbers_ItemClicked(object sender, EventArgs e)
         {
             numbersChecked = !numbersChecked;
@@ -107,6 +162,12 @@ namespace Minecraft_GUI_Builder
             }
             else numbers.Image = null;
         }
+
+        /**
+         * Handles item clicking from the blocksPanel.
+         * Sets the currentItem to the clicked one.
+        **/
+
         private void ItemClicked(object sender, EventArgs e)
         {
             Item item = (Item) sender;
@@ -114,12 +175,20 @@ namespace Minecraft_GUI_Builder
             blocksPanel.Invalidate();
         }
 
+        /**
+         * Handles the resizing of the window and repositions the inventory in the center of the screen.
+        **/
+
         private void GUI_Resize(object sender, EventArgs e)
         {
             var workPanel = this.workPanel;
             inventoryImage.Location = new Point(workPanel.Location.X + workPanel.Width / 2 - inventoryImage.Width / 2, workPanel.Location.Y + workPanel.Height / 2 - inventoryImage.Height / 2);
-            Application.DoEvents();
         }
+
+        /**
+         * Finds the slot that you clicked in and sets the selectedItem's image to the slot's image.
+         * Invalidate invalidates the image to redraw it.
+         **/
 
         private void InventoryImage_Click(object sender, MouseEventArgs e)
         {
@@ -132,17 +201,43 @@ namespace Minecraft_GUI_Builder
                 int y = yPos + (18 * 3) * (i / 9);
                 if (e.X >= x && e.X <= x + (18 * 3) && e.Y >= y && e.Y <= y + (18 * 3)) clickedSlot = (Slot) slotList[i];
             }
-            Debug.WriteLine(clickedSlot != null ? clickedSlot.Index : "no slot / null");
             if (clickedSlot != null)
             {
                 if (currentItem != null)
                 {
                     clickedSlot.Image = currentItem.Image.Image;
-                }
-                else clickedSlot.Image = null;
+                    clickedSlot.ImageName = currentItem.Title;
+                    clickedSlot.Block = currentItem.Block;
+                } else clickedSlot.Image = null;
+
                 inventoryImage.Invalidate();
             }
         }
+
+        /**
+         * Focuses the panel when entered so workPanel_MouseClick will always execute.
+        **/
+
+        private void workPanel_MouseEnter(object sender, EventArgs e)
+        {
+            if(Focused) workPanel.Focus();
+        }
+
+        /**
+         * Sets the currentItem to null when your not clicking in the inventory.
+         * Invalidate invalidates the panel to redraw it.
+         **/
+
+        private void workPanel_MouseClick(object sender, MouseEventArgs e)
+        {
+            currentItem = null;
+            blocksPanel.Invalidate();
+        }
+
+        /**
+         * Sets all the slot images to null, clearing them.
+         * Invalidate invalidates the image to redraw it.
+        **/
 
         private void clearSlotsButton_Click(object sender, EventArgs e)
         {
@@ -152,6 +247,83 @@ namespace Minecraft_GUI_Builder
                 inventoryImage.Invalidate();
             }
         }
+
+        /**
+         * Handles the switching from Items to Blocks buttons.
+         * Invalidate invalidates the panel to redraw it.
+        **/
+
+        private void itemsButton_Click(object sender, EventArgs e)
+        {
+            if(!itemsLastClicked)
+            {
+                currentItem = null;
+                blocksPanel.Controls.Clear();
+                itemList.Clear();
+                items.Images.Clear();
+                items.Images.AddRange(itemImages.ToArray());
+                for (int i = 0; i < items.Images.Count; i++)
+                {
+                    Item item = new Item(itemImageNames[i]);
+                    item.Image.Width = 32;
+                    item.Image.Height = 32;
+                    items.ImageSize = new Size(32, 32);
+                    item.Image.Image = items.Images[i];
+                    item.Index = i;
+                    itemList.Add(item);
+                }
+                blocksPanel.SuspendLayout();
+                foreach (Item item in itemList)
+                {
+                    blocksPanel.Controls.Add(item.Image);
+                    item.onClick += ItemClicked;
+                }
+                blocksPanel.ResumeLayout();
+                itemsLastClicked = true;
+                //blocksPanel.Invalidate();
+            }
+        }
+
+        /**
+         * Handles the switching from Blocks to Items buttons.
+         * Invalidate invalidates the panel to redraw it.
+         **/
+
+        private void blocksButton_Click(object sender, EventArgs e)
+        {
+            if(itemsLastClicked)
+            {
+                currentItem = null;
+                blocksPanel.Controls.Clear();
+                itemList.Clear();
+                items.Images.Clear();
+                items.Images.AddRange(blockImages.ToArray());
+                for (int i = 0; i < items.Images.Count; i++)
+                {
+                    Item item = new Item(blockImageNames[i]);
+                    item.Image.Width = 32;
+                    item.Image.Height = 32;
+                    items.ImageSize = new Size(32, 32);
+                    item.Image.Image = items.Images[i];
+                    item.Block = true;
+                    item.Index = i;
+                    itemList.Add(item);
+                }
+                blocksPanel.SuspendLayout();
+                foreach (Item item in itemList)
+                {
+                    blocksPanel.Controls.Add(item.Image);
+                    item.onClick += ItemClicked;
+                }
+                blocksPanel.ResumeLayout();
+                itemsLastClicked = false;
+                //blocksPanel.Invalidate();
+            }
+        }
+
+        /**
+         * Creates and sets up the inventory.
+         **/
 
         public void CreateInventory()
         {
@@ -171,14 +343,8 @@ namespace Minecraft_GUI_Builder
             if (!workPanel.Controls.Contains(inventoryImage)) workPanel.Controls.Add(inventoryImage);
         }
 
-        public Image GetInventoryImage()
-        {
-            return inventoryImage.Image;
-        }
-        public static GUI GetInstance()
-        {
-            return instance;
-        }
+        public Image GetInventoryImage() { return inventoryImage.Image; }
+        public static GUI GetInstance() { return instance; }
 
     }
 }

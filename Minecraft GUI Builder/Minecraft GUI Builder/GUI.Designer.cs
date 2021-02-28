@@ -42,6 +42,8 @@ namespace Minecraft_GUI_Builder
             this.numbers = new System.Windows.Forms.ToolStripMenuItem();
             this.blocksPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.workPanel = new System.Windows.Forms.Panel();
+            this.itemsButton = new System.Windows.Forms.Button();
+            this.blocksButton = new System.Windows.Forms.Button();
             this.programMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -149,12 +151,38 @@ namespace Minecraft_GUI_Builder
             this.workPanel.Name = "workPanel";
             this.workPanel.Size = new System.Drawing.Size(626, 426);
             this.workPanel.TabIndex = 7;
+            this.workPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.workPanel_MouseClick);
+            this.workPanel.MouseEnter += new System.EventHandler(this.workPanel_MouseEnter);
+            // 
+            // itemsButton
+            // 
+            this.itemsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.itemsButton.Location = new System.Drawing.Point(625, 1);
+            this.itemsButton.Name = "itemsButton";
+            this.itemsButton.Size = new System.Drawing.Size(83, 23);
+            this.itemsButton.TabIndex = 8;
+            this.itemsButton.Text = "Items";
+            this.itemsButton.UseVisualStyleBackColor = true;
+            this.itemsButton.Click += new System.EventHandler(this.itemsButton_Click);
+            // 
+            // blocksButton
+            // 
+            this.blocksButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.blocksButton.Location = new System.Drawing.Point(717, 1);
+            this.blocksButton.Name = "blocksButton";
+            this.blocksButton.Size = new System.Drawing.Size(83, 23);
+            this.blocksButton.TabIndex = 8;
+            this.blocksButton.Text = "Blocks";
+            this.blocksButton.UseVisualStyleBackColor = true;
+            this.blocksButton.Click += new System.EventHandler(this.blocksButton_Click);
             // 
             // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.blocksButton);
+            this.Controls.Add(this.itemsButton);
             this.Controls.Add(this.workPanel);
             this.Controls.Add(this.blocksPanel);
             this.Controls.Add(this.programMenu);
@@ -183,6 +211,8 @@ namespace Minecraft_GUI_Builder
         private System.Windows.Forms.ToolStripMenuItem numbers;
         private System.Windows.Forms.FlowLayoutPanel blocksPanel;
         public System.Windows.Forms.Panel workPanel;
+        private System.Windows.Forms.Button itemsButton;
+        private System.Windows.Forms.Button blocksButton;
     }
 }
 
